@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Next.js dev chaqmoq / N badge */
+nextjs-portal,
+[data-next-badge],
+[data-next-badge-root],
+[data-nextjs-toast] {
+  display: none !important;
+}
+
+.news-body p { margin: 0.75em 0; }
+.news-body h2 { font-size: 1.4em; font-weight: 600; margin: 1.2em 0 0.4em; color: var(--color-ink); }
+.news-body h3 { font-size: 1.2em; font-weight: 600; margin: 1em 0 0.35em; color: var(--color-ink); }
+.news-body ul, .news-body ol { padding-left: 1.3em; margin: 0.6em 0; }
+.news-body a { color: var(--color-brand); }
+.news-body img { max-width: 100%; border-radius: 12px; margin: 1em 0; }
+.news-body blockquote { border-left: 3px solid var(--color-brand); padding-left: 12px; color: var(--color-muted); }
+.news-body table { width: 100%; border-collapse: collapse; margin: 1em 0; }
+.news-body th, .news-body td { border: 1px solid #ececef; padding: 8px 10px; }
+.news-body iframe, .news-body video { max-width: 100%; border: 0; border-radius: 12px; margin: 1em 0; aspect-ratio: 16/9; }
+.news-body a[download] { display: inline-flex; margin: 0.4em 0; padding: 8px 12px; border-radius: 8px; background: #fff1e6; color: var(--color-brand); font-weight: 600; }
+
 :root {
   --background: #f6f6ef;
   --foreground: #0a0a0a;

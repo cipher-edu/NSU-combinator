@@ -33,7 +33,11 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
   }
   const token = getAccess()
   if (token) headers.set('Authorization', `Bearer ${token}`)
-  const res = await fetch(path, { ...init, headers, cache: 'no-store' })
+  let res = await fetch(path, { ...init, headers, cache: 'no-store' })
+  if (res.status === 401 && token && (init.method || 'GET') === 'GET') {
+    headers.delete('Authorization')
+    res = await fetch(path, { ...init, headers, cache: 'no-store' })
+  }
   const json = (await res.json()) as Envelope<T>
   if (!res.ok || json.success === false) {
     throw new ApiError(json.message || 'Xato yuz berdi', json.code || 'ERROR', res.status)

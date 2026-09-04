@@ -4,6 +4,7 @@ const api = process.env.API_PROXY_TARGET || 'http://localhost:8002'
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  devIndicators: { appIsrStatus: false, buildActivity: false },
   // Django APPEND_SLASH 301 (/path → /path/) va Next 308 (/path/ → /path)
   // bir-birini quvib, /api/* da ERR_TOO_MANY_REDIRECTS beradi.
   skipTrailingSlashRedirect: true,

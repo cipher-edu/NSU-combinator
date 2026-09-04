@@ -16,7 +16,13 @@ export default function NewsDetailPage() {
   useEffect(() => {
     api<NewsItem>(`/api/v1/public/news/${slug}`).then(setItem).catch(() => setItem(null))
   }, [slug])
-  if (!item) return <main className="px-5 py-24 text-center text-muted">…</main>
+  if (!item) {
+    return (
+      <main className="px-5 py-24 text-center text-muted">
+        Yangilik topilmadi yoki hali nashr qilinmagan.
+      </main>
+    )
+  }
   return (
     <main className="mx-auto max-w-3xl px-5 py-16 sm:px-6">
       <Link href="/news" className="kicker text-brand">{t.navNews}</Link>
@@ -28,7 +34,7 @@ export default function NewsDetailPage() {
         <Img src={newsCover(item.slug, item.cover)} alt="" className="aspect-[16/9] w-full object-cover" />
       </div>
       <article
-        className="prose prose-neutral mt-8 max-w-none text-[16px] leading-relaxed text-muted"
+        className="news-body mt-8 max-w-none text-[16px] leading-relaxed text-muted"
         dangerouslySetInnerHTML={{ __html: pick(lang, item.body_uz || '', item.body_en) }}
       />
       {item.youtube_url && (

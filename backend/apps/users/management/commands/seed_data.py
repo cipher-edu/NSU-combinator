@@ -215,7 +215,7 @@ class Command(BaseCommand):
             )
         now = timezone.now()
         for slug, uz, en, body in NEWS:
-            news, _ = News.objects.update_or_create(
+            news, created = News.objects.get_or_create(
                 slug=slug,
                 defaults={
                     'title_uz': uz, 'title_en': en, 'body_uz': body, 'body_en': body,

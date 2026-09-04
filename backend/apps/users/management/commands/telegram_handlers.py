@@ -45,9 +45,42 @@ def _link(raw: str, tg_id: int, username: str):
     return 'OK', user
 
 
+@sync_to_async
+def _campaign_start(code: str, tg_id: int, username: str):
+    from apps.ops.models import Campaign, Lead
+    from apps.ops.services import get_or_create_lead, record_hit
+    campaign = Campaign.objects.filter(code=code, is_active=True).first()
+    if not campaign:
+        return None
+    record_hit(campaign)
+    user = User.objects.filter(telegram_user_id=tg_id).first()
+    email = (user.email if user else '') or f'tg{tg_id}@telegram.local'
+    get_or_create_lead(
+        email=email,
+        defaults={
+            'name': (username or '')[:150],
+            'campaign': campaign,
+            'source': campaign.channel if campaign.channel in Lead.Source.values else Lead.Source.TELEGRAM,
+            'status': Lead.Status.NEW,
+            'converted_user': user,
+        },
+    )
+    return campaign
+
+
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     tg = update.effective_user
     args = context.args or []
+    if args and args[0].startswith('c_'):
+        campaign = await _campaign_start(args[0][2:], tg.id, tg.username or '')
+        if campaign:
+            await update.message.reply_text(
+                f"NSU startup-club — {campaign.name}.\n"
+                "Ariza: saytda email orqali kiring, keyin kabinetda Telegramni ulang."
+            )
+            return
+        await update.message.reply_text(HELP)
+        return
     if args:
         code, user = await _link(args[0], tg.id, tg.username or '')
         if code == 'OK':

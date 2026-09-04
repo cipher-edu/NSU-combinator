@@ -9,6 +9,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 from apps.users.views import HealthView, AdminVerifyStudentView, AdminSetRolesView
 from apps.applications.views import AdminApplicationTransitionView
 from apps.cohorts.views import CurrentSeasonView, SeasonTransitionView
+from apps.ops.views import PublicCampaignGoView
 
 admin.site.site_header = 'NSU startup-club'
 admin.site.site_title = 'NSU startup-club'
@@ -33,6 +34,8 @@ urlpatterns = [
     path('api/v1/admin/users/<uuid:id>/verify-student/', AdminVerifyStudentView.as_view()),
     path('api/v1/admin/users/<uuid:id>/roles/', AdminSetRolesView.as_view()),
     path('api/v1/admin/notifications/', include('apps.notifications.urls')),
+    path('api/v1/ops/', include('apps.ops.urls')),
+    path('api/v1/public/go/<slug:code>', PublicCampaignGoView.as_view()),
 ]
 
 if settings.DEBUG:

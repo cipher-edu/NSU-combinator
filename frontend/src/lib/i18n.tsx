@@ -202,5 +202,6 @@ export function useI18n() {
 }
 
 export function pick(lang: Lang, uz: string, en?: string) {
-  return lang === 'en' && en ? en : uz
+  if (lang === 'en' && en && en.trim()) return en
+  return uz || en || ''
 }

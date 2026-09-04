@@ -9,6 +9,7 @@ from .serializers import (
 
 class PublishedMixin:
     permission_classes = [permissions.AllowAny]
+    authentication_classes = []
 
 
 class FacultyListView(PublishedMixin, generics.ListAPIView):

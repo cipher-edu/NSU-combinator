@@ -24,6 +24,11 @@ export default function ApplyPage() {
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
+    const src = new URLSearchParams(window.location.search).get('src')
+    if (src) localStorage.setItem('nsu_src', src)
+  }, [])
+
+  useEffect(() => {
     if (!user) return
     const next = new URLSearchParams(window.location.search).get('next') || '/cabinet/apply'
     router.replace(next.startsWith('/') ? next : '/cabinet/apply')
@@ -34,9 +39,10 @@ export default function ApplyPage() {
     setErr('')
     setBusy(true)
     try {
+      const src = localStorage.getItem('nsu_src') || ''
       const d = await api<OtpSend>('/api/v1/auth/otp/send', {
         method: 'POST',
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, src: src || undefined }),
       })
       setSent(true)
       setDebug(d.debug_otp || '')
@@ -53,6 +59,8 @@ export default function ApplyPage() {
     setBusy(true)
     try {
       const body: Record<string, unknown> = { email, code }
+      const src = localStorage.getItem('nsu_src')
+      if (src) body.src = src
       if (consentPd) body.consent_pd = true
       if (consentMk) body.consent_marketing = true
       const d = await api<TokenPair>('/api/v1/auth/otp/verify', {

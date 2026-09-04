@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 import { Anton, Bricolage_Grotesque, IBM_Plex_Mono, IBM_Plex_Sans, Outfit, Source_Serif_4 } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
-import { Aurora, Footer, Header } from '@/components/Chrome'
-import { Lattice } from '@/components/Lattice'
+import { SiteFrame } from '@/components/SiteFrame'
 
 const sans = IBM_Plex_Sans({ subsets: ['latin', 'cyrillic'], weight: ['400', '500', '600', '700'], variable: '--font-sans' })
 const outfit = Outfit({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-outfit' })
@@ -34,11 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="overflow-x-hidden antialiased">
         <Providers>
-          <Aurora />
-          <Lattice />
-          <Header />
-          <div className="animate-page-in">{children}</div>
-          <Footer />
+          <SiteFrame>{children}</SiteFrame>
         </Providers>
       </body>
     </html>

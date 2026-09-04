@@ -58,6 +58,21 @@ class OtpSendView(APIView):
         if email:
             code = send_otp(email)
             send_otp_email.delay(email, code)
+            src = (request.data.get('campaign') or request.data.get('src') or '').strip()
+            if src:
+                try:
+                    from apps.ops.models import Campaign, Lead
+                    from apps.ops.services import get_or_create_lead
+                    campaign = Campaign.objects.filter(code=src, is_active=True).first()
+                    source = Lead.Source.SITE
+                    if campaign and campaign.channel in Lead.Source.values:
+                        source = campaign.channel
+                    get_or_create_lead(
+                        email=email,
+                        defaults={'campaign': campaign, 'source': source, 'status': Lead.Status.NEW},
+                    )
+                except Exception:
+                    pass
             data = {'sent': True}
             if settings.DEBUG:
                 data['debug_otp'] = code
@@ -90,6 +105,13 @@ class OtpVerifyView(APIView):
                 user.consent_marketing_at = timezone.now()
             user.save()
             send_welcome_email.delay(user.email)
+        src = (request.data.get('campaign') or request.data.get('src') or '').strip()
+        if src:
+            try:
+                from apps.ops.services import attribute_user
+                attribute_user(user, src)
+            except Exception:
+                pass
         return Response(_tokens_for(user))
 
 
@@ -182,6 +204,26 @@ class TelegramLinkView(APIView):
         user.telegram_linked_at = None
         user.save(update_fields=['telegram_user_id', 'telegram_username', 'telegram_linked_at'])
         return Response({'linked': False})
+
+
+class AdminLoginView(APIView):
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+    throttle_classes = [AuthEmailThrottle]
+
+    def post(self, request):
+        email = (request.data.get('email') or '').strip().lower()
+        password = request.data.get('password') or ''
+        if not email or not password:
+            raise ApiError('VALIDATION_ERROR', 'Email va parol majburiy')
+        user = User.objects.filter(email=email).first()
+        if not user or not user.has_usable_password() or not user.check_password(password):
+            raise ApiError('INVALID_CREDENTIALS', 'Email yoki parol noto‘g‘ri', status_code=401)
+        if not user.is_active:
+            raise ApiError('INACTIVE', 'Akkaunt o‘chirilgan', status_code=403)
+        if user.role not in (User.Role.ADMIN, User.Role.SUPERADMIN):
+            raise ApiError('NOT_STAFF', 'Bu panel faqat adminlar uchun', status_code=403)
+        return Response(_tokens_for(user))
 
 
 class PasswordLoginView(TokenObtainPairView):
