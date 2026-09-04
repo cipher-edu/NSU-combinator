@@ -212,7 +212,7 @@ body {
 .animate-floaty { animation: 16s ease-in-out infinite floaty; }
 
 @keyframes img-blur-in { from { filter: blur(16px); opacity: 0; } to { filter: none; opacity: 1; } }
-.img-blur-up:not(.is-loaded) { filter: blur(16px); opacity: 0; }
+.img-blur-up:not(.is-loaded) { filter: blur(8px); }
 .img-blur-up.is-loaded { animation: 0.7s cubic-bezier(0.22, 1, 0.36, 1) img-blur-in; }
 
 @keyframes menu-in { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: none; } }

@@ -14,11 +14,11 @@ const bricolage = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-br
 
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
-  title: 'NSU Combinator — NavDU startap akseleratori',
+  title: 'NSU startup-club — NavDU startap akseleratori',
   description: 'Navoiy davlat universiteti startap akseleratori. 10 hafta, mentorlik, Demo Day.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
-    title: 'NSU Combinator',
+    title: 'NSU startup-club',
     description: 'NavDU startap akseleratori',
     images: ['/images/og.jpg'],
   },

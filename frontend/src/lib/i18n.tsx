@@ -6,7 +6,7 @@ type Lang = 'uz' | 'en'
 
 const dict = {
   uz: {
-    brand: 'NSU Combinator',
+    brand: 'NSU startup-club',
     tagline: 'Navoiy davlat universiteti startap akseleratori',
     navPortfolio: 'Portfolio',
     navTeam: 'Jamoa',
@@ -30,9 +30,9 @@ const dict = {
     legendApps: 'ariza topshirdi',
     legendAccepted: 'startap qabul qilindi',
     aboutKicker: '01  Biz kimmiz',
-    aboutTitle: 'NSU Combinator haqida',
+    aboutTitle: 'NSU startup-club haqida',
     aboutP1:
-      'NSU Combinator — Navoiy davlat universitetidagi startap akseleratori. G‘oyani 10 haftada ishlaydigan mahsulotga aylantiramiz. Har hafta bitta maqsad, bitta mentor, hafta oxirida — aniq natija.',
+      'NSU startup-club — Navoiy davlat universitetidagi startap akseleratori. G‘oyani 10 haftada ishlaydigan mahsulotga aylantiramiz. Har hafta bitta maqsad, bitta mentor, hafta oxirida — aniq natija.',
     aboutP2:
       'Dastur Demo Day bilan tugaydi: dekanat, mentorlar va tashqi investorlar zalda o‘tiradi. Uch daqiqalik hikoyangizni shuncha marta aytasizki, sahnaga chiqqanda hayajon halaqit bermaydi.',
     aboutP3:
@@ -56,7 +56,7 @@ const dict = {
     ctaTitle: 'Birinchi qadam sizniki.',
     ctaOpen: 'Arizalar ochiq.',
     ctaClosed: 'Hozir ariza oynasi yopiq.',
-    footer: '© 2026 NSU Combinator. Navoiy davlat universiteti.',
+    footer: '© 2026 NSU startup-club. Navoiy davlat universiteti.',
     portfolioTitle: 'Portfolio',
     portfolioLead: 'Dasturimizdan o‘tgan va keyingi bosqichga chiqqan startaplar.',
     portfolioEmpty: 'Keyingi mavsum — bu joy sizning startapingiz uchun.',
@@ -88,7 +88,7 @@ const dict = {
     ],
   },
   en: {
-    brand: 'NSU Combinator',
+    brand: 'NSU startup-club',
     tagline: 'Navoi State University startup accelerator',
     navPortfolio: 'Portfolio',
     navTeam: 'Team',
@@ -112,9 +112,9 @@ const dict = {
     legendApps: 'applied',
     legendAccepted: 'startups accepted',
     aboutKicker: '01  Who we are',
-    aboutTitle: 'About NSU Combinator',
+    aboutTitle: 'About NSU startup-club',
     aboutP1:
-      'NSU Combinator is Navoi State University’s startup accelerator. In 10 weeks we turn an idea into a working product. One goal a week, one mentor, something ships every Friday.',
+      'NSU startup-club is Navoi State University’s startup accelerator. In 10 weeks we turn an idea into a working product. One goal a week, one mentor, something ships every Friday.',
     aboutP2:
       'The program ends with Demo Day: faculty, mentors and outside investors in the room. You tell the three-minute story so many times that nerves stop getting in the way.',
     aboutP3:
@@ -138,7 +138,7 @@ const dict = {
     ctaTitle: 'The first step is yours.',
     ctaOpen: 'Applications are open.',
     ctaClosed: 'Applications are closed right now.',
-    footer: '© 2026 NSU Combinator. Navoi State University.',
+    footer: '© 2026 NSU startup-club. Navoi State University.',
     portfolioTitle: 'Portfolio',
     portfolioLead: 'Startups that went through the program.',
     portfolioEmpty: 'Next season — this spot is for your startup.',

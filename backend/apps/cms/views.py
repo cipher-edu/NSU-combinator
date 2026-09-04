@@ -1,8 +1,9 @@
 from rest_framework import generics, permissions
-from .models import Faculty, News, Partner, StaffMember, Page, Investor
+from .models import Faculty, News, Partner, StaffMember, Page, Investor, GalleryImage
 from .serializers import (
     FacultySerializer, NewsListSerializer, NewsDetailSerializer,
     PartnerSerializer, StaffSerializer, PageSerializer, InvestorSerializer,
+    GalleryImageSerializer,
 )
 
 
@@ -50,3 +51,9 @@ class PageDetailView(PublishedMixin, generics.RetrieveAPIView):
     queryset = Page.objects.filter(is_published=True)
     serializer_class = PageSerializer
     lookup_field = 'slug'
+
+
+class GalleryListView(PublishedMixin, generics.ListAPIView):
+    queryset = GalleryImage.objects.filter(is_published=True).exclude(image='')
+    serializer_class = GalleryImageSerializer
+    pagination_class = None

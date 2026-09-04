@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MOMENTS } from '@/lib/media'
 
 export function Img({
@@ -12,10 +12,18 @@ export function Img({
   alt: string
   className?: string
 }) {
+  const ref = useRef<HTMLImageElement>(null)
   const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (el?.complete && el.naturalWidth > 0) setLoaded(true)
+  }, [src])
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
+      ref={ref}
       src={src}
       alt={alt}
       className={`img-blur-up ${loaded ? 'is-loaded' : ''} ${className || ''}`}

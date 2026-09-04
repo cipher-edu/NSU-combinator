@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.static import serve as media_serve
 from rest_framework.permissions import AllowAny
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
@@ -9,12 +10,12 @@ from apps.users.views import HealthView, AdminVerifyStudentView, AdminSetRolesVi
 from apps.applications.views import AdminApplicationTransitionView
 from apps.cohorts.views import CurrentSeasonView, SeasonTransitionView
 
-admin.site.site_header = 'NSU Combinator'
-admin.site.site_title = 'NSU Combinator'
+admin.site.site_header = 'NSU startup-club'
+admin.site.site_title = 'NSU startup-club'
 admin.site.index_title = 'Boshqaruv paneli'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('kpp-admin/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(permission_classes=[AllowAny], authentication_classes=[]), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema', permission_classes=[AllowAny], authentication_classes=[]), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema', permission_classes=[AllowAny], authentication_classes=[]), name='redoc'),
@@ -37,3 +38,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+else:
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', media_serve, {'document_root': settings.MEDIA_ROOT}),
+    ]

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 @shared_task(name='notifications.send_otp_email')
 def send_otp_email(email: str, code: str):
-    subject = 'NSU Combinator — kirish kodi'
+    subject = 'NSU startup-club — kirish kodi'
     text = f'Sizning bir martalik kodingiz: {code}\nAmal qilish muddati: 10 daqiqa.'
     n = Notification.objects.create(
         email=email, channel=Notification.Channel.EMAIL, title=subject, body='OTP',
@@ -29,7 +29,7 @@ def send_otp_email(email: str, code: str):
 
 @shared_task(name='notifications.send_welcome_email')
 def send_welcome_email(email: str):
-    subject = 'NSU Combinator — xush kelibsiz'
+    subject = 'NSU startup-club — xush kelibsiz'
     text = 'Email tasdiqlandi. Kabinetda profilni to‘ldiring va Telegram botni ulang.'
     try:
         send_html_email(email, subject, text, welcome_html())

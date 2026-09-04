@@ -148,7 +148,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=False, cast=bool)
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='NSU Combinator <noreply@nsuni.uz>')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='NSU startup-club <noreply@nsuni.uz>')
 if EMAIL_HOST:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 else:
@@ -166,6 +166,11 @@ CORS_ALLOWED_ORIGINS = config(
     cast=Csv(),
 )
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS',
+    default='http://localhost:3000',
+    cast=Csv(),
+)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -207,16 +212,16 @@ SIMPLE_JWT = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'NSU Combinator API',
+    'TITLE': 'NSU startup-club API',
     'DESCRIPTION': 'NavDU startap akseleratori backend',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
 JAZZMIN_SETTINGS = {
-    'site_title': 'NSU Combinator',
-    'site_header': 'NSU Combinator',
-    'site_brand': 'NSU Combinator',
+    'site_title': 'NSU startup-club',
+    'site_header': 'NSU startup-club',
+    'site_brand': 'NSU startup-club',
     'welcome_sign': 'NavDU startap akseleratori',
     'copyright': 'Navoiy davlat universiteti',
 }

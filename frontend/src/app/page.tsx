@@ -9,8 +9,8 @@ import { HeroGlobe } from '@/components/HeroGlobe'
 import { KnowledgeNews } from '@/components/Knowledge'
 import { MomentsGallery } from '@/components/Moments'
 import { PartnerGrid, PartnerMarquee } from '@/components/Partners'
-import { FALLBACK_PARTNERS, MOMENTS } from '@/lib/media'
-import type { NewsItem, Partner, PortfolioItem, Season } from '@/lib/types'
+import { FALLBACK_PARTNERS, MOMENTS, mediaUrl } from '@/lib/media'
+import type { GalleryItem, NewsItem, Partner, PortfolioItem, Season } from '@/lib/types'
 
 const GLOBE_NAMES = [
   'NavLab',
@@ -33,6 +33,7 @@ export default function HomePage() {
   const [news, setNews] = useState<NewsItem[]>([])
   const [partners, setPartners] = useState<Partner[]>([])
   const [portfolio, setPortfolio] = useState<PortfolioItem[]>([])
+  const [gallery, setGallery] = useState<GalleryItem[]>([])
 
   useEffect(() => {
     api<Season>('/api/v1/public/seasons/current').then(setSeason).catch(() => setSeason(null))
@@ -42,6 +43,9 @@ export default function HomePage() {
     api<Partner[]>('/api/v1/public/partners').then(setPartners).catch(() => {})
     api<{ results?: PortfolioItem[] } | PortfolioItem[]>('/api/v1/public/portfolio/')
       .then((d) => setPortfolio(Array.isArray(d) ? d : d.results || []))
+      .catch(() => {})
+    api<GalleryItem[]>('/api/v1/public/gallery')
+      .then((d) => setGallery(Array.isArray(d) ? d : []))
       .catch(() => {})
   }, [])
 
@@ -56,6 +60,14 @@ export default function HomePage() {
     return [...fromPf, ...extra].slice(0, 24)
   }, [portfolio])
   const globeDots = Math.max(apps, 900)
+  const galleryUrls = gallery
+    .filter((g) => g.show_in_gallery && g.image)
+    .map((g) => mediaUrl(g.image))
+  const placed = (slot: string, fallback: string) =>
+    mediaUrl(gallery.find((g) => g.placement === slot)?.image) || fallback
+  const aboutImg = placed('about', galleryUrls[2] || MOMENTS[2])
+  const demoImg = placed('demo', galleryUrls[galleryUrls.length - 1] || MOMENTS[18])
+  const applyImg = placed('apply', '/images/apply-hero.jpg')
 
   return (
     <>
@@ -105,7 +117,7 @@ export default function HomePage() {
 
       <section className="band mx-auto grid max-w-7xl gap-12 px-5 py-24 sm:grid-cols-2 sm:px-8">
         <div className="group relative overflow-hidden rounded-[28px]">
-          <Img src={MOMENTS[2]} alt="" className="aspect-[4/5] w-full object-cover lg:aspect-square" />
+          <Img src={aboutImg} alt="" className="aspect-[4/5] w-full object-cover lg:aspect-square" />
           <span className="sweep-blur pointer-events-none absolute inset-0" />
         </div>
         <div className="rise-in self-center">
@@ -185,14 +197,14 @@ export default function HomePage() {
         </ol>
       </section>
 
-      <MomentsGallery eyebrow={t.galleryTitle} title={t.galleryLead} />
+      <MomentsGallery eyebrow={t.galleryTitle} title={t.galleryLead} images={galleryUrls} />
 
       <section className="band mx-auto max-w-7xl px-5 py-24 sm:px-8">
         <p className="eyebrow">04  Demo Day</p>
         <h2 className="page-title mt-4">{t.demoTitle}</h2>
         <p className="hero-lede mt-4 max-w-xl text-muted">{t.demoLead}</p>
         <div className="group relative mt-10 overflow-hidden rounded-[28px]">
-          <Img src={MOMENTS[18]} alt="" className="aspect-[16/7] w-full object-cover" />
+          <Img src={demoImg} alt="" className="aspect-[16/7] w-full object-cover" />
           <span className="sweep-blur pointer-events-none absolute inset-0" />
           <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/70 to-transparent p-8">
             <p className="font-display text-3xl italic text-white sm:text-5xl">{t.seasonSoon}</p>
@@ -205,7 +217,7 @@ export default function HomePage() {
       <KnowledgeNews news={news} />
 
       <section className="relative mx-auto mb-8 max-w-6xl overflow-hidden rounded-[32px] px-5 sm:px-8">
-        <Img src="/images/apply-hero.jpg" alt="" className="aspect-[16/7] w-full object-cover" />
+        <Img src={applyImg} alt="" className="aspect-[16/7] w-full object-cover" />
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a0a0a73] px-6 text-center text-white">
           <p className="soon-word">{open ? t.ctaOpen : t.ctaClosed}</p>
           <p className="mt-3 text-white/80">{t.ctaTitle}</p>

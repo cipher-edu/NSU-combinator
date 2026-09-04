@@ -14,7 +14,7 @@ export function Logo() {
       <span className="grid h-8 w-8 place-items-center rounded-[6px] bg-brand text-[11px] font-bold text-white">
         NSU
       </span>
-      <span className="font-display text-[22px] italic leading-none tracking-tight">Combinator</span>
+      <span className="font-display text-[22px] italic leading-none tracking-tight">startup-club</span>
     </Link>
   )
 }

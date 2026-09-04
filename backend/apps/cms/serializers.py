@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.markdown import sanitize_html
-from .models import Faculty, News, Partner, StaffMember, Page, Investor
+from .models import Faculty, News, Partner, StaffMember, Page, Investor, GalleryImage
 
 
 class FacultySerializer(serializers.ModelSerializer):
@@ -45,6 +45,21 @@ class InvestorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Investor
         fields = ('id', 'slug', 'name', 'title_uz', 'title_en', 'org', 'photo')
+
+
+class GalleryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GalleryImage
+        fields = (
+            'id',
+            'slug',
+            'image',
+            'caption_uz',
+            'caption_en',
+            'placement',
+            'show_in_gallery',
+            'order',
+        )
 
 
 class PageSerializer(serializers.ModelSerializer):

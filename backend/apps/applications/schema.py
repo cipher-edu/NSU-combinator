@@ -1,4 +1,4 @@
-"""NSU Combinator ariza formasi: 7 bosqich, ketma-ket savollar."""
+"""NSU startup-club ariza formasi: 7 bosqich, ketma-ket savollar."""
 
 STEPS = [
     {
@@ -234,15 +234,15 @@ STEPS = [
         'n': 6,
         'title_uz': 'Tavsiya',
         'title_en': 'Referral',
-        'lead_uz': 'Nega NSU Combinator va kim yo‘lladi.',
-        'lead_en': 'Why NSU Combinator and who sent you.',
+        'lead_uz': 'Nega NSU startup-club va kim yo‘lladi.',
+        'lead_en': 'Why NSU startup-club and who sent you.',
         'questions': [
             {
                 'id': 'why_us',
                 'type': 'textarea',
                 'required': True,
-                'label_uz': 'Nega aynan NSU Combinator? Toshkentdagi dastur emas — shu yerda nima kerak?',
-                'label_en': 'Why NSU Combinator, not a Tashkent program?',
+                'label_uz': 'Nega aynan NSU startup-club? Toshkentdagi dastur emas — shu yerda nima kerak?',
+                'label_en': 'Why NSU startup-club, not a Tashkent program?',
             },
             {
                 'id': 'heard',

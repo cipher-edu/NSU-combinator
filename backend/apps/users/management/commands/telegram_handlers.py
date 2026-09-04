@@ -10,7 +10,7 @@ from apps.users.telegram_link import hash_token
 logger = logging.getLogger(__name__)
 
 HELP = (
-    "NSU Combinator boti\n\n"
+    "NSU startup-club boti\n\n"
     "/start — akkauntni ulash\n"
     "/status — ulanish holati\n"
     "/help — yordam\n\n"
@@ -53,7 +53,7 @@ async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if code == 'OK':
             await update.message.reply_text(
                 f"Ulandi. Salom, {user.name or user.email}.\n"
-                "Endi NSU Combinator xabarlari shu yerga keladi."
+                "Endi NSU startup-club xabarlari shu yerga keladi."
             )
             return
         msg = {

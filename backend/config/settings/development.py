@@ -1,6 +1,8 @@
 from .base import *  # noqa
 
 DEBUG = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 
 REST_FRAMEWORK = {
     **REST_FRAMEWORK,  # noqa: F405

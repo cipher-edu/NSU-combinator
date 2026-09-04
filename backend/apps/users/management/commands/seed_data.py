@@ -1,8 +1,11 @@
+from pathlib import Path
+
 from django.conf import settings
+from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from apps.cms.models import Faculty, Investor, News, Page, Partner, StaffMember
+from apps.cms.models import Faculty, GalleryImage, Investor, News, Page, Partner, StaffMember
 from apps.cohorts.models import Season, Track
 from apps.users.models import User
 
@@ -75,8 +78,8 @@ PARTNERS = [
 ]
 
 NEWS = [
-    ('qanday-ariza', 'NSU Combinator 1-mavsumiga qabul: nima kerak?',
-     'How to get into NSU Combinator Season 1',
+    ('qanday-ariza', 'NSU startup-club 1-mavsumiga qabul: nima kerak?',
+     'How to get into NSU startup-club Season 1',
      '<p>Jamoa, muammo va nima uchun aynan NavDU — shu uch savolga aniq javob yozing. Prezentatsiya shart emas.</p>'),
     ('demo-day-nima', 'Demo Day nima va zalda kim o‘tiradi?',
      'What is Demo Day',
@@ -99,8 +102,8 @@ NEWS = [
     ('ulush-talaba', 'Talaba jamoasida ulushni qanday yozamiz',
      'How student teams write equity',
      '<p>Do‘stlikka emas, qilgan ishga. Cap table qoralamasi 8-haftada stolga tushadi.</p>'),
-    ('nega-navdu', 'Nega aynan NavDU Combinator?',
-     'Why NSU Combinator',
+    ('nega-navdu', 'Nega aynan NavDU startup-club?',
+     'Why NSU startup-club',
      '<p>Toshkent akseleratori emas — universitet ichidagi 10 hafta. Yuzma-yuz, mentor yonida.</p>'),
     ('investor-savol', 'Investor zalda nima so‘raydi?',
      'What investors ask in the room',
@@ -109,6 +112,33 @@ NEWS = [
      'Why the weekly goal stays written down',
      '<p>Og‘zaki kelishuv unutiladi. Kabinetdagi yozuv juma kuni tekshiriladi.</p>'),
 ]
+
+
+SEED_DIR = Path(settings.BASE_DIR) / 'seed_media'
+
+NEWS_COVER_FILES = {
+    'qanday-ariza': SEED_DIR / 'news' / 'qanday-ariza.jpg',
+    'demo-day-nima': SEED_DIR / 'news' / 'demo-day-nima.jpg',
+    'mentorlik': SEED_DIR / 'news' / 'mentorlik.jpg',
+    'fakultet-mentor': SEED_DIR / 'moments' / '15.jpg',
+    'navoiy-sanoat': SEED_DIR / 'moments' / '18.jpg',
+    'birinchi-jamoa': SEED_DIR / 'moments' / '05.jpg',
+    'sahna-qorquvi': SEED_DIR / 'moments' / '19.jpg',
+    'ulush-talaba': SEED_DIR / 'moments' / '13.jpg',
+    'nega-navdu': SEED_DIR / 'moments' / '18.jpg',
+    'investor-savol': SEED_DIR / 'moments' / '17.jpg',
+    'haftalik-maqsad': SEED_DIR / 'moments' / '01.jpg',
+}
+
+
+def _attach(instance, field_name, path: Path):
+    if not path.is_file():
+        return
+    field = getattr(instance, field_name)
+    if field:
+        return
+    with path.open('rb') as fh:
+        field.save(path.name, File(fh), save=True)
 
 
 class Command(BaseCommand):
@@ -162,7 +192,7 @@ class Command(BaseCommand):
             defaults={
                 'title_uz': 'Dastur haqida',
                 'title_en': 'About',
-                'body_uz': '<p>NSU Combinator — Navoiy davlat universitetining startap akseleratori. '
+                'body_uz': '<p>NSU startup-club — Navoiy davlat universitetining startap akseleratori. '
                            'Talaba jamoalari 10 haftada g‘oyadan Demo Day’gacha o‘tadi.</p>',
                 'is_published': True,
             },
@@ -185,11 +215,66 @@ class Command(BaseCommand):
             )
         now = timezone.now()
         for slug, uz, en, body in NEWS:
-            News.objects.update_or_create(
+            news, _ = News.objects.update_or_create(
                 slug=slug,
                 defaults={
                     'title_uz': uz, 'title_en': en, 'body_uz': body, 'body_en': body,
                     'is_published': True, 'published_at': now,
                 },
             )
+            cover = NEWS_COVER_FILES.get(slug)
+            if cover:
+                _attach(news, 'cover', cover)
+
+        for slug, _name, uz, _en, _order in STAFF:
+            staff = StaffMember.objects.filter(slug=slug).first()
+            if staff:
+                _attach(staff, 'photo', SEED_DIR / 'team' / f'{slug}.jpg')
+        for slug, _name, _title, _org, _order in INVESTORS:
+            inv = Investor.objects.filter(slug=slug).first()
+            if inv:
+                _attach(inv, 'photo', SEED_DIR / 'investors' / f'{slug}.jpg')
+
+        for i in range(1, 20):
+            slug = f'moment-{i:02d}'
+            placement = ''
+            if i == 3:
+                placement = GalleryImage.Placement.ABOUT
+            elif i == 19:
+                placement = GalleryImage.Placement.DEMO
+            img, _ = GalleryImage.objects.update_or_create(
+                slug=slug,
+                defaults={
+                    'caption_uz': f'Moment {i:02d}',
+                    'order': i,
+                    'placement': placement,
+                    'show_in_gallery': True,
+                    'is_published': True,
+                },
+            )
+            _attach(img, 'image', SEED_DIR / 'moments' / f'{i:02d}.jpg')
+
+        apply_hero, _ = GalleryImage.objects.update_or_create(
+            slug='apply-hero',
+            defaults={
+                'caption_uz': 'Ariza banner',
+                'order': 100,
+                'placement': GalleryImage.Placement.APPLY,
+                'show_in_gallery': False,
+                'is_published': True,
+            },
+        )
+        _attach(apply_hero, 'image', SEED_DIR / 'apply-hero.jpg')
+        og, _ = GalleryImage.objects.update_or_create(
+            slug='og',
+            defaults={
+                'caption_uz': 'Open Graph',
+                'order': 101,
+                'placement': GalleryImage.Placement.OG,
+                'show_in_gallery': False,
+                'is_published': True,
+            },
+        )
+        _attach(og, 'image', SEED_DIR / 'og.jpg')
+
         self.stdout.write(self.style.SUCCESS('Seed tayyor'))

@@ -76,7 +76,7 @@ export default function ApplyPage() {
           <Img src="/images/apply-hero.jpg" alt="" className="hero-photo-in aspect-[4/3] w-full object-cover" />
           <span className="sweep-blur pointer-events-none absolute inset-0" />
         </div>
-        <p className="eyebrow">NSU Combinator</p>
+        <p className="eyebrow">NSU startup-club</p>
         <h1 className="page-title mt-4">{t.tagline}</h1>
         <p className="hero-lede mt-4 text-muted">
           Emailga bir martalik kod yuboramiz. Google v1 da yo‘q — universitet OTP.

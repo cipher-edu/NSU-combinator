@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = 'NSU Combinator Telegram bot (polling)'
+    help = 'NSU startup-club Telegram bot (polling)'
 
     def handle(self, *args, **options):
         try:

@@ -88,3 +88,35 @@ class Page(BaseModel):
 
     class Meta:
         db_table = 'pages'
+
+
+class GalleryImage(BaseModel):
+    class Placement(models.TextChoices):
+        NONE = '', 'Faqat galereya'
+        ABOUT = 'about', 'About blok'
+        DEMO = 'demo', 'Demo Day'
+        APPLY = 'apply', 'Ariza banner'
+        OG = 'og', 'Open Graph'
+
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='public/cms/gallery/%Y/%m/', blank=True, null=True)
+    caption_uz = models.CharField(max_length=200, blank=True)
+    caption_en = models.CharField(max_length=200, blank=True)
+    placement = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        choices=Placement.choices,
+    )
+    show_in_gallery = models.BooleanField(default=True)
+    is_published = models.BooleanField(default=True)
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        db_table = 'gallery_images'
+        verbose_name = 'Galereya rasmi'
+        verbose_name_plural = 'Galereya rasmlari'
+        ordering = ['order', 'created_at']
+
+    def __str__(self):
+        return self.caption_uz or self.slug

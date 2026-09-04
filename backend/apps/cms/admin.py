@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Faculty, News, Partner, StaffMember, Page, Investor
+from django.utils.html import format_html
+from .models import Faculty, News, Partner, StaffMember, Page, Investor, GalleryImage
 
 
 @admin.register(Faculty)
@@ -33,3 +34,24 @@ class PageAdmin(admin.ModelAdmin):
 @admin.register(Investor)
 class InvestorAdmin(admin.ModelAdmin):
     list_display = ('name', 'org', 'title_uz', 'is_published', 'order')
+
+
+@admin.register(GalleryImage)
+class GalleryImageAdmin(admin.ModelAdmin):
+    list_display = ('thumb', 'slug', 'caption_uz', 'placement', 'show_in_gallery', 'order', 'is_published')
+    list_display_links = ('thumb', 'slug')
+    list_editable = ('order', 'is_published', 'show_in_gallery')
+    list_filter = ('is_published', 'show_in_gallery', 'placement')
+    search_fields = ('slug', 'caption_uz', 'caption_en')
+    prepopulated_fields = {'slug': ('caption_uz',)}
+    readonly_fields = ('thumb',)
+
+    def thumb(self, obj):
+        if not obj.image:
+            return '—'
+        return format_html(
+            '<img src="{}" alt="" style="height:52px;width:72px;object-fit:cover;border-radius:6px" />',
+            obj.image.url,
+        )
+
+    thumb.short_description = 'Rasm'

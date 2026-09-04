@@ -1,4 +1,4 @@
-# NSU Combinator
+# NSU startup-club
 
 Navoiy davlat universiteti (NavDU / `nsuni.uz`) startap akseleratori platformasi.
 

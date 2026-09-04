@@ -11,4 +11,5 @@ urlpatterns = [
     path('staff', views.StaffListView.as_view()),
     path('investors', views.InvestorListView.as_view()),
     path('pages/<slug:slug>', views.PageDetailView.as_view()),
+    path('gallery', views.GalleryListView.as_view()),
 ]

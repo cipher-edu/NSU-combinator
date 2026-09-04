@@ -7,11 +7,13 @@ import { MOMENTS } from '@/lib/media'
 export function MomentsGallery({
   eyebrow,
   title,
+  images,
 }: {
   eyebrow: string
   title: string
+  images?: string[]
 }) {
-  const pool = MOMENTS
+  const pool = images?.length ? images : MOMENTS
   const shown = Math.min(12, pool.length)
   const [slots, setSlots] = useState(() => Array.from({ length: shown }, (_, i) => i))
   const [open, setOpen] = useState<number | null>(null)

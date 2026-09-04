@@ -30,6 +30,16 @@ export type NewsItem = {
 }
 
 export type Partner = { id: string; slug: string; name: string; logo: string | null; url: string }
+export type GalleryItem = {
+  id: string
+  slug: string
+  image: string | null
+  caption_uz: string
+  caption_en: string
+  placement: string
+  show_in_gallery: boolean
+  order: number
+}
 export type Staff = { id: string; slug: string; name: string; title_uz: string; title_en: string; photo: string | null; linkedin: string }
 export type Investor = { id: string; slug: string; name: string; title_uz: string; title_en: string; org: string; photo: string | null }
 export type Faculty = { id: string; slug: string; name_uz: string; name_en: string }

@@ -72,7 +72,7 @@ class TeamInviteView(views.APIView):
         invite, raw = TeamInvite.issue(team, email, request.user)
         send_simple_email.delay(
             email,
-            'NSU Combinator — jamoaga taklif',
+            'NSU startup-club — jamoaga taklif',
             f'Sizni «{team.name}» jamoasiga taklif qilishdi.\nToken: {raw}\n'
             f'Qabul: POST /api/v1/teams/invites/accept/ {{"token": "..."}}',
         )

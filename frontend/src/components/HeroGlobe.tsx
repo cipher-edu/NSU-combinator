@@ -163,17 +163,19 @@ export function HeroGlobe({
         }
         const size = ((d.got ? 3.4 : 1.9) + 1.1 * depth) * scale
         ctx.fillRect(Math.round(px), Math.round(py), size, size)
-        if (d.got && hover > 0.01) {
+        if (d.got) {
           const name = accepted[d.gotIndex]?.name
           if (name) labels.push({ x: px, y: py, depth, name, d: Math.hypot(px - mx, py - my) })
         }
       }
 
       ctx.globalAlpha = 1
-      if (hover > 0.01 && accepted.length) {
+      if (accepted.length) {
         ctx.font = '800 12px system-ui, sans-serif'
         ctx.textBaseline = 'middle'
-        const vis = labels.filter((l) => l.depth > 0.52).sort((a, b) => a.d - b.d)
+        const vis = labels
+          .filter((l) => l.depth > 0.52)
+          .sort((a, b) => (hover > 0.01 ? a.d - b.d : b.depth - a.depth))
         const boxes: { x0: number; y0: number; x1: number; y1: number }[] = []
         for (const l of vis) {
           const tw = ctx.measureText(l.name).width
@@ -183,8 +185,8 @@ export function HeroGlobe({
           if (boxL.x0 < 4 || boxL.x1 > w - 4) continue
           if (boxes.some((b) => boxL.x0 < b.x1 && boxL.x1 > b.x0 && boxL.y0 < b.y1 && boxL.y1 > b.y0)) continue
           boxes.push(boxL)
-          const hot = l.d < 26
-          ctx.globalAlpha = hover * (hot ? 1 : 0.8)
+          const hot = hover > 0.01 && l.d < 26
+          ctx.globalAlpha = hot ? 1 : 0.86
           ctx.strokeStyle = 'rgba(245,245,238,0.92)'
           ctx.lineWidth = 3
           ctx.strokeText(l.name, tx, ty)
