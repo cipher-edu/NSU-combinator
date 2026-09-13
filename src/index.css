@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-rgb: 37, 99, 235; /* Qirollik Ko'ki */
+  --cream-bg: #fbf9f5;
+}
+
+@layer base {
+  body {
+    background-color: #fbf9f5;
+    color: #0e1014;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    letter-spacing: -0.012em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html.dark body {
+    background-color: #07090e;
+    color: #f1f5f9;
+  }
+}
+
+/* UzCombinator Aurora Ambient Background Effect (Royal Indigo & Sky Hues) */
+.aurora-root {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+  -webkit-mask-image: radial-gradient(
+    125% 95% at 50% 8%, #000 0%, rgba(0,0,0,0.85) 30%,
+    rgba(0,0,0,0.35) 62%, transparent 92%
+  );
+  mask-image: radial-gradient(
+    125% 95% at 50% 8%, #000 0%, rgba(0,0,0,0.85) 30%,
+    rgba(0,0,0,0.35) 62%, transparent 92%
+  );
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.aurora-blob--a {
+  top: -12%; left: -6%;
+  width: 50vw; height: 50vw; max-width: 760px; max-height: 760px;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(37, 99, 235, 0.14) 0%, rgba(37, 99, 235, 0.04) 45%, transparent 72%);
+  animation: driftA 26s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.aurora-blob--b {
+  top: -8%; right: -8%;
+  width: 52vw; height: 52vw; max-width: 800px; max-height: 800px;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(79, 70, 229, 0.15) 0%, rgba(56, 189, 248, 0.08) 48%, transparent 74%);
+  animation: driftB 32s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.aurora-blob--c {
+  top: 38%; left: 24%;
+  width: 55vw; height: 55vw; max-width: 850px; max-height: 850px;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(224, 231, 255, 0.45) 0%, rgba(37, 99, 235, 0.05) 50%, transparent 72%);
+  animation: driftC 38s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.aurora-sweep {
+  position: absolute;
+  top: -30%; left: -25%; width: 150%; height: 90%;
+  background: linear-gradient(74deg,
+    transparent 38%, rgba(37, 99, 235, 0.05) 50%, transparent 62%);
+  filter: blur(28px);
+  animation: auroraSweep 24s ease-in-out infinite alternate;
+}
+
+@keyframes driftA {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(7vw, 8vh, 0) scale(1.15); }
+}
+@keyframes driftB {
+  from { transform: translate3d(0, 0, 0) scale(1.1); opacity: 0.8; }
+  to   { transform: translate3d(-6vw, 6vh, 0) scale(0.94); opacity: 1; }
+}
+@keyframes driftC {
+  from { transform: translate3d(-5vw, -3vh, 0) scale(0.96); }
+  to   { transform: translate3d(5vw, 5vh, 0) scale(1.12); }
+}
+@keyframes auroraSweep {
+  from { transform: translateX(-10%); opacity: 0.4; }
+  to   { transform: translateX(10%); opacity: 0.85; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #fbf9f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.card-clean {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 6px 16px rgba(0, 0, 0, 0.03);
+}
+
+.card-clean:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08), 0 12px 28px rgba(0, 0, 0, 0.05);
+}
+
+.story-ink {
+  background: #090c12;
+  color: #f5f5ee;
+}
+
+.font-mono-num {
+  font-family: 'Space Grotesk', monospace;
+}

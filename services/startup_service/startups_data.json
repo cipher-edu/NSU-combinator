@@ -1,0 +1,100 @@
+{
+  "1": {
+    "id": "1",
+    "name": "Business Robots AI",
+    "tagline": "Kichik va o‘rta bizneslar uchun avtomatlashtirilgan AI-menejerlar platformasi",
+    "fullDescription": "Savdo, mijozlarga xizmat ko‘rsatish va CRM operatsiyalarini 24/7 avtonom boshqaruvchi sun’iy intellekt agentlari ekotizimi.",
+    "problem": "O‘zbekistondagi 100,000 dan ortiq kichik bizneslar operatorlar yetishmovchiligi sababli tunda va dam olish kunlarida mijozlarning 45% ini yo‘qotadi.",
+    "solution": "Telegram, Instagram va veb-saytga 5 daqiqada ulanuvchi, to‘liq o‘zbek tilida so‘zlashuvchi AI-robotlar.",
+    "category": "AI & EdTech",
+    "stage": "Traction",
+    "batch": "3-Mavsum (2026)",
+    "founders": [
+      {
+        "name": "Bekzod Shukurov",
+        "role": "CEO & AI Muhandis",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300",
+        "faculty": "Axborot texnologiyalari",
+        "telegram": "@bekzod_ai"
+      }
+    ],
+    "upvotes": 1,
+    "logo": "🤖",
+    "raisedAmount": "$0",
+    "pitchDeckUrl": null,
+    "metrics": {
+      "users": "0 Korxona",
+      "revenue": "$0 MRR"
+    },
+    "tags": [
+      "AI",
+      "B2B",
+      "SaaS"
+    ]
+  },
+  "2": {
+    "id": "2",
+    "name": "AgroSmart Drip (NavDU)",
+    "tagline": "Navoiy va Qizilqum hududi uchun sun’iy intellektga asoslangan aqlli tomchilatib sug‘orish",
+    "fullDescription": "IoT datchiklari orqali tuproq namligi va havo haroratini real vaqtda o‘lchab, suv sarfini 50% ga qisqartiruvchi apparat-dasturiy majmua.",
+    "problem": "Navoiy viloyatida suv tanqisligi sababli fermer xo‘jaliklarining hosildorligi 30% ga pasaymoqda.",
+    "solution": "Quyosh batareyalarida ishlovchi avtonom klapanlar va sun’iy intellektli suv taqsimlash algoritmi.",
+    "category": "AgroTech & Eco",
+    "stage": "MVP",
+    "batch": "3-Mavsum (2026)",
+    "founders": [
+      {
+        "name": "Sanjar Qodirov",
+        "role": "Texnik Asoschi",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
+        "faculty": "Fizika-matematika",
+        "telegram": "@sanjar_agro"
+      }
+    ],
+    "upvotes": 0,
+    "logo": "🌱",
+    "raisedAmount": "$0",
+    "pitchDeckUrl": null,
+    "metrics": {
+      "users": "0 Fermer xo‘jaligi",
+      "grantWon": "0 UZS"
+    },
+    "tags": [
+      "IoT",
+      "AgroTech",
+      "Eco"
+    ]
+  },
+  "3": {
+    "id": "3",
+    "name": "EduMentor AI (NavDU)",
+    "tagline": "Talabalar uchun shaxsiylashtirilgan interaktiv o‘quv yo‘riqchisi",
+    "fullDescription": "Har bir talabaning o‘zlashtirish tezligi va qiziqishlariga moslashgan sun’iy intellekt repetitori.",
+    "problem": "Katta auditoriyalarda professorlar har bir talabaning individual savollariga vaqt ajrata olmaydi.",
+    "solution": "Darsliklar va ma’ruza matnlarini tahlil qilib, testlar va qadam-baqadam tushuntirishlar beruvchi AI bot.",
+    "category": "AI & EdTech",
+    "stage": "MVP",
+    "batch": "3-Mavsum (2026)",
+    "founders": [
+      {
+        "name": "Aziza Karimova",
+        "role": "Product Lead",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300",
+        "faculty": "Axborot texnologiyalari",
+        "telegram": "@aziza_edutech"
+      }
+    ],
+    "upvotes": 0,
+    "logo": "📚",
+    "raisedAmount": "$0",
+    "pitchDeckUrl": null,
+    "metrics": {
+      "users": "0 Talaba"
+    },
+    "tags": [
+      "EdTech",
+      "AI",
+      "Mobile"
+    ]
+  }
+}

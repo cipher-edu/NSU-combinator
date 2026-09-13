@@ -1,0 +1,35 @@
+/* CKEditor Modern styling for Django Admin (Jazzmin) */
+.django-ckeditor-widget {
+    width: 100% !important;
+    display: block !important;
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+.cke {
+    width: 100% !important;
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+    overflow: hidden !important;
+}
+.cke_inner {
+    border-radius: 8px !important;
+}
+.cke_top {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 6px !important;
+}
+.cke_bottom {
+    background: #f8fafc !important;
+    border-top: 1px solid #e2e8f0 !important;
+}
+.cke_toolgroup {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 4px !important;
+}
+.cke_button:hover {
+    background: #e2e8f0 !important;
+    border-radius: 3px !important;
+}

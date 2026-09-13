@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # 1. API Gateway & Reverse Proxy
+  api-gateway:
+    image: nginx:alpine
+    container_name: uzc-api-gateway
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - cms-service
+      - application-service
+      - startup-service
+      - event-service
+
+  # 2. CMS & Frontend Layout Service (Django)
+  cms-service:
+    build: ./services/cms_service
+    container_name: uzc-cms-service
+    restart: always
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./services/cms_service:/app
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgres://navdu_user:navdu_secret@postgres-db:5432/cms_db
+      - REDIS_URL=redis://redis-broker:6379/0
+    depends_on:
+      - postgres-db
+      - redis-broker
+
+  # 3. Application Service (45 kunlik qabul & OTP)
+  application-service:
+    build: ./services/application_service
+    container_name: uzc-app-service
+    restart: always
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./services/application_service:/app
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgres://navdu_user:navdu_secret@postgres-db:5432/apps_db
+      - REDIS_URL=redis://redis-broker:6379/1
+    depends_on:
+      - postgres-db
+      - redis-broker
+
+  # 4. Startups & Leaderboard Service (FastAPI)
+  startup-service:
+    build: ./services/startup_service
+    container_name: uzc-startup-service
+    restart: always
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./services/startup_service:/app
+    environment:
+      - DATABASE_URL=postgres://navdu_user:navdu_secret@postgres-db:5432/startups_db
+      - REDIS_URL=redis://redis-broker:6379/2
+    depends_on:
+      - postgres-db
+      - redis-broker
+
+  # 5. Events & QR Ticket Service
+  event-service:
+    build: ./services/event_service
+    container_name: uzc-event-service
+    restart: always
+    ports:
+      - "8004:8004"
+    volumes:
+      - ./services/event_service:/app
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgres://navdu_user:navdu_secret@postgres-db:5432/events_db
+    depends_on:
+      - postgres-db
+
+  # 6. Telegram Bot & Notification Worker
+  bot-worker:
+    build: ./services/bot_worker
+    container_name: uzc-bot-worker
+    restart: always
+    volumes:
+      - ./services/bot_worker:/app
+    environment:
+      - BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
+      - REDIS_URL=redis://redis-broker:6379/1
+    depends_on:
+      - redis-broker
+
+  # 7. Redis Message Broker & Cache
+  redis-broker:
+    image: redis:7-alpine
+    container_name: uzc-redis-broker
+    restart: always
+    ports:
+      - "6379:6379"
+
+  # 8. PostgreSQL Database
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: uzc-postgres-db
+    restart: always
+    environment:
+      - POSTGRES_USER=navdu_user
+      - POSTGRES_PASSWORD=navdu_secret
+      - POSTGRES_DB=cms_db
+      - POSTGRES_MULTIPLE_DATABASES=apps_db,startups_db,events_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./gateway/init-multiple-dbs.sql:/docker-entrypoint-initdb.d/init-multiple-dbs.sql:ro
+
+volumes:
+  pgdata:

@@ -1,0 +1,1 @@
+# Django events migrations package
